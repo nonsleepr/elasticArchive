@@ -6,14 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - /home/mitmproxy/.mitmproxy
-      - ./scripts/elasticArchive.py:/scripts/elasticArchive.py
+      - ./.mitmproxy:/home/mitmproxy/.mitmproxy
     ports:
       - 8080:8080
     command: [
       "mitmdump", "-s", "/scripts/elasticArchive.py",
       "--set", "elasticsearch_URL=http://elasticsearch:9200/mitmproxy/_doc",
-      "--set", "storeBinaryContent=false"
+      "--set", "storeBinaryContent=true",
     ]
 
 
