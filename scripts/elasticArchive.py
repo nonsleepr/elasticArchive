@@ -90,6 +90,9 @@ class elasticArchive:
         'tls': (
             ('client_conn', 'tls_extensions'),
         ),
+        'sockname': (
+            ('client_conn', 'sockname'),
+        ),
 
     }
 
@@ -125,7 +128,11 @@ class elasticArchive:
                     'content': base64.b64encode(bytes(m[2], 'utf-8')) if strutils.is_mostly_bin(m[2]) else m[2],
                     'timestamp': int(m[3] * 1000),
                 } for m in ms],
-            }
+            },
+            {
+                'fields': self.fields['sockname'],
+                'func': lambda l: [str(el) for el in l]
+            },
         ]
 
     @staticmethod
